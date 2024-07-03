@@ -7,11 +7,16 @@ const nombre = document.getElementById("Nombres");
 const apellido = document.getElementById("Apellido");
 const telefono = document.getElementById("Telefono");
 const correo = document.getElementById("Correo");
+const usuario = document.getElementById("Usuario");
+const password = document.getElementById("Password");
 
 
 const form = document.getElementById("form");
 const adv = document.getElementById("advertencia");
 
+
+
+// --------------------
 
 form.addEventListener("submit", e=>{
     e.preventDefault()
@@ -57,16 +62,57 @@ form.addEventListener("submit", e=>{
         adv.innerHTML = alert
     }else{
         
-        adv.innerHTML = "Enviado";
+        adv.innerHTML = "Cliente cargado";
 
+        let datos = {
+            nombre: nombre.value,
+            apellido: apellido.value,
+            telefono: telefono.value,
+            correo: correo.value,
+            usuario: usuario.value,
+            password: password.value
+        }
+        console.log(datos.nombre)
+
+        let destino = 'http://127.0.0.1:5000/api-fenix2/registro'
+        enviarDatos(destino, datos)
         
 
         nombre.value = "";
         apellido.value = "";
         telefono.value = "";
         correo.value = "";
-        ter1.checked = false;   }
-
-   
+        usuario.value = "";
+        password.value = "";
+        ter1.checked = false;   
         
+    }
+
+    
+
+
 })
+
+async function enviarDatos(destino, datos) {
+    let envio = {
+        method: "POST",
+        body: JSON.stringify({
+        datos: datos
+        }),
+        headers: {
+        "Content-type": "application/json; charset=UTF-8"
+        }
+    }
+
+    let resultado = await fetch(destino, envio)
+                        .then(respuesta => respuesta.json())
+                        .then(resultado => resultado)
+                        .catch(error => console.warn(error.status));
+                        
+    //window.location.hash = '#rtaForm';
+    // Aguardo que cargue la respuesta, luego la completo
+    //sessionStorage.setItem('perfil', 1);
+    //setTimeout(respuestaOk, 300, datos, resultado);
+    console.log(resultado)
+    console.log(datos.nombre)
+}
