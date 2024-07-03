@@ -53,6 +53,15 @@ form.addEventListener("submit", e=>{
         flag = true
     }
 
+    if (!(usuario.value.length >= 6)){
+        alert +=`El usuario debe tener por lo menos 6 caracteres <br>`
+        flag = true
+    }
+    if (!(password.value.length >= 8)){
+        alert +=`La contraseña debe tener por lo menos 8 caracteres <br>`
+        flag = true
+    }
+    
     if(!ter1.checked){
         alert +=`Debe aceptar los terminos y condiciones <br>`
         flag = true
@@ -116,3 +125,4 @@ async function enviarDatos(destino, datos) {
     console.log(resultado)
     console.log(datos.nombre)
 }
+
